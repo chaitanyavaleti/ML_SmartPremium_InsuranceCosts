@@ -14,27 +14,6 @@ This project builds a **Machine Learning (ML)** model to predict **insurance pre
 
 ---
 
-## 📂 Project Structure  
-
-```
-insurance-premium-prediction/
-│── data/
-│   ├── train.csv
-│   ├── test.csv
-│── notebooks/
-│   ├── eda.ipynb
-│── src/
-│   ├── preprocessing.py
-│   ├── train.py
-│   ├── evaluate.py
-│── app.py                # Streamlit App
-│── requirements.txt
-│── Dockerfile
-│── README.md
-```
-
----
-
 ## ⚙️ Setup Instructions  
 
 ### 1️⃣ Clone the Repository  
@@ -65,7 +44,7 @@ Run training script to:
 - Register best model automatically  
 
 ```bash
-python src/train.py
+python SmartInsurance_MLFlow.py
 ```
 
 ---
@@ -74,28 +53,11 @@ python src/train.py
 
 Run the app locally:  
 ```bash
-streamlit run app.py
+streamlit run Insurance_app.py
 ```
 
 Open [http://localhost:8501](http://localhost:8501) in your browser.  
 
----
-
-## 🐳 Run with Docker  
-
-### 1️⃣ Build Docker Image  
-```bash
-docker build -t insurance-premium-app .
-```
-
-### 2️⃣ Run Container  
-```bash
-docker run -p 8501:8501 insurance-premium-app
-```
-
-Now access the app at [http://localhost:8501](http://localhost:8501).  
-
----
 
 ## 📊 Example Prediction  
 
@@ -119,13 +81,7 @@ Output:
 - **Streamlit** (frontend)  
 - **Docker** (containerization)  
 
----
+## 👤 Created By
 
-## 🔮 Next Steps  
-- Add SHAP explainability for premium predictions.  
-- Integrate with a cloud MLflow server (AWS/GCP/Azure).  
-- Deploy Streamlit app to **Streamlit Cloud** or **Heroku**.  
-
----
-
-🙌 **Contributions Welcome!** Fork the repo, open issues, and submit PRs.  
+Chaitanya Valeti (MAE4 [AIML-C-WD-E-B18)
+Built as a Mini project for the **AIML (Artificial Intelligence & Machine Learning)** domain at GUVI (HCL Tech).
