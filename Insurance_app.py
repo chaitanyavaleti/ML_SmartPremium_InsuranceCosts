@@ -24,36 +24,38 @@ model = mlflow.pyfunc.load_model(
 st.set_page_config(page_title="Insurance Premium Predictor", layout="wide")
 
 st.title("💰 Insurance Premium Prediction App")
-st.write("Fill in the details below to predict the insurance premium.")
 
 # -------------------------------
 # Input Form
 # -------------------------------
 with st.form("premium_form"):
-    st.subheader("Customer Information")
+
+    col1, col2 = st.columns(2)
 
     # Numeric inputs
-    age = st.number_input("Age", min_value=18, max_value=100, value=30)
-    income = st.number_input("Annual Income", min_value=1000, max_value=1000000, value=50000)
-    dependents = st.number_input("Number of Dependents", min_value=0, max_value=10, value=1)
-    health_score = st.slider("Health Score", 0, 100, 75)
-    prev_claims = st.number_input("Previous Claims", min_value=0, max_value=20, value=0)
-    vehicle_age = st.slider("Vehicle Age (years)", 0, 20, 5)
-    credit_score = st.slider("Credit Score", 300, 850, 650)
-    ins_duration = st.number_input("Insurance Duration (years)", min_value=0, max_value=50, value=5)
+    with col1: 
+        st.subheader("Customer Information")
+        age = st.number_input("Age", min_value=18, max_value=100, value=30)
+        income = st.number_input("Annual Income", min_value=1000, max_value=1000000, value=50000)
+        dependents = st.number_input("Number of Dependents", min_value=0, max_value=10, value=1)
+        health_score = st.slider("Health Score", 0, 100, 75)
+        prev_claims = st.number_input("Previous Claims", min_value=0, max_value=20, value=0)
+        vehicle_age = st.slider("Vehicle Age (years)", 0, 20, 5)
+        credit_score = st.slider("Credit Score", 300, 850, 650)
+        ins_duration = st.number_input("Insurance Duration (years)", min_value=0, max_value=50, value=5)
 
-    st.subheader("Categorical Features")
-
-    gender = st.radio("Gender", ["Male", "Female"])
-    marital_status = st.selectbox("Marital Status", ["Single", "Married", "Divorced"])
-    education = st.selectbox("Education Level", ["High School", "Bachelor's", "Master's", "PhD"])
-    occupation = st.selectbox("Occupation", ["Employed", "Self-Employed", "Unemployed"])
-    location = st.selectbox("Location", ["Urban", "Suburban", "Rural"])
-    policy_type = st.selectbox("Policy Type", ["Basic", "Comprehensive", "Premium"])
-    feedback = st.selectbox("Customer Feedback", ["Poor", "Average", "Good"])
-    smoking = st.radio("Smoking Status", ["Yes", "No"])
-    exercise = st.selectbox("Exercise Frequency", ["Daily", "Weekly", "Monthly", "Rarely"])
-    property_type = st.selectbox("Property Type", ["House", "Condo", "Apartment"])
+    with col2:
+        st.subheader("Categorical Features")
+        gender = st.radio("Gender", ["Male", "Female"])
+        marital_status = st.selectbox("Marital Status", ["Single", "Married", "Divorced"])
+        education = st.selectbox("Education Level", ["High School", "Bachelor's", "Master's", "PhD"])
+        occupation = st.selectbox("Occupation", ["Employed", "Self-Employed", "Unemployed"])
+        location = st.selectbox("Location", ["Urban", "Suburban", "Rural"])
+        policy_type = st.selectbox("Policy Type", ["Basic", "Comprehensive", "Premium"])
+        feedback = st.selectbox("Customer Feedback", ["Poor", "Average", "Good"])
+        smoking = st.radio("Smoking Status", ["Yes", "No"])
+        exercise = st.selectbox("Exercise Frequency", ["Daily", "Weekly", "Monthly", "Rarely"])
+        property_type = st.selectbox("Property Type", ["House", "Condo", "Apartment"])
 
     submit = st.form_submit_button("Predict Premium")
 
