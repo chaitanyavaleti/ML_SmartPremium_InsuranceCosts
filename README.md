@@ -18,7 +18,7 @@ This project builds a **Machine Learning (ML)** model to predict **insurance pre
 
 ### 1️⃣ Clone the Repository  
 ```bash
-git clone [https://github.com/chaitanyavaleti/ML_SmartPremium_InsuranceCosts.git](https://github.com/chaitanyavaleti/ML_SmartPremium_InsuranceCosts.git)
+git clone https://github.com/chaitanyavaleti/ML_SmartPremium_InsuranceCosts.git
 cd ML_SmartPremium_InsuranceCosts
 ```
 
