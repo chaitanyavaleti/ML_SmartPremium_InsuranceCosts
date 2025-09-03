@@ -61,16 +61,8 @@ Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ## 📊 Example Prediction  
 
-Input:  
-- Age: 30  
-- Income: 50,000  
-- Marital Status: Married  
-- Policy: Comprehensive  
+<img width="1870" height="772" alt="image" src="https://github.com/user-attachments/assets/282fba0a-e5c1-433f-82f3-0429cbc2f570" />
 
-Output:  
-```
-💡 Predicted Premium: $3,420.75
-```
 
 ---
 
