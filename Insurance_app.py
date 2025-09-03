@@ -1,16 +1,24 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from mlflow.tracking import MlflowClient
 import mlflow.pyfunc
 
-# -------------------------------
-# Load best model from MLflow
-# -------------------------------
-MODEL_NAME = "InsurancePremiumModel"
-MODEL_STAGE = "Production"  # or "Staging"
+MODEL_NAME = "InsurancePremiumPrediction"
+client = MlflowClient()
+
+# Find the latest version tagged as Production
+versions = client.search_model_versions(f"name='{MODEL_NAME}'")
+prod_versions = [v for v in versions if v.tags.get("stage") == "Production"]
+
+if not prod_versions:
+    raise RuntimeError("No model version tagged as Production!")
+
+# Pick latest Production version
+latest_prod_version = max(prod_versions, key=lambda v: int(v.version))
 
 model = mlflow.pyfunc.load_model(
-    model_uri=f"models:/{MODEL_NAME}/{MODEL_STAGE}"
+    f"models:/{MODEL_NAME}/{latest_prod_version.version}"
 )
 
 st.set_page_config(page_title="Insurance Premium Predictor", layout="wide")
@@ -53,58 +61,47 @@ with st.form("premium_form"):
 # Preprocess input to match training features
 # -------------------------------
 if submit:
-    # Numeric features
+
     input_data = {
-        "Age": age,
-        "Annual Income": income,
-        "Number of Dependents": dependents,
-        "Health Score": health_score,
-        "Previous Claims": prev_claims,
-        "Vehicle Age": vehicle_age,
-        "Credit Score": credit_score,
-        "Insurance Duration": ins_duration,
+    "Age": float(age),
+    "Annual Income": float(income),
+    "Number of Dependents": float(dependents),
+    "Health Score": float(health_score),
+    "Previous Claims": float(prev_claims),
+    "Vehicle Age": float(vehicle_age),
+    "Credit Score": float(credit_score),
+    "Insurance Duration": float(ins_duration),
+    "Gender": gender,  # string
+    "Marital Status": marital_status,  # string
+    "Education Level": education,  # string
+    "Occupation": occupation,  # string
+    "Location": location,  # string
+    "Policy Type": policy_type,  # string
+    "Customer Feedback": feedback,  # string
+    "Smoking Status": smoking,  # string
+    "Exercise Frequency": exercise,  # string
+    "Property Type": property_type  # string
     }
-
-    # One-hot categorical features (set selected=1, others=0)
-    cats = {
-        "Gender_Female": 1 if gender == "Female" else 0,
-        "Gender_Male": 1 if gender == "Male" else 0,
-        "Marital Status_Single": 1 if marital_status == "Single" else 0,
-        "Marital Status_Married": 1 if marital_status == "Married" else 0,
-        "Marital Status_Divorced": 1 if marital_status == "Divorced" else 0,
-        "Education Level_High School": 1 if education == "High School" else 0,
-        "Education Level_Bachelor's": 1 if education == "Bachelor's" else 0,
-        "Education Level_Master's": 1 if education == "Master's" else 0,
-        "Education Level_PhD": 1 if education == "PhD" else 0,
-        "Occupation_Employed": 1 if occupation == "Employed" else 0,
-        "Occupation_Self-Employed": 1 if occupation == "Self-Employed" else 0,
-        "Occupation_Unemployed": 1 if occupation == "Unemployed" else 0,
-        "Location_Urban": 1 if location == "Urban" else 0,
-        "Location_Suburban": 1 if location == "Suburban" else 0,
-        "Location_Rural": 1 if location == "Rural" else 0,
-        "Policy Type_Basic": 1 if policy_type == "Basic" else 0,
-        "Policy Type_Comprehensive": 1 if policy_type == "Comprehensive" else 0,
-        "Policy Type_Premium": 1 if policy_type == "Premium" else 0,
-        "Customer Feedback_Poor": 1 if feedback == "Poor" else 0,
-        "Customer Feedback_Average": 1 if feedback == "Average" else 0,
-        "Customer Feedback_Good": 1 if feedback == "Good" else 0,
-        "Smoking Status_Yes": 1 if smoking == "Yes" else 0,
-        "Smoking Status_No": 1 if smoking == "No" else 0,
-        "Exercise Frequency_Daily": 1 if exercise == "Daily" else 0,
-        "Exercise Frequency_Weekly": 1 if exercise == "Weekly" else 0,
-        "Exercise Frequency_Monthly": 1 if exercise == "Monthly" else 0,
-        "Exercise Frequency_Rarely": 1 if exercise == "Rarely" else 0,
-        "Property Type_House": 1 if property_type == "House" else 0,
-        "Property Type_Condo": 1 if property_type == "Condo" else 0,
-        "Property Type_Apartment": 1 if property_type == "Apartment" else 0,
-    }
-
-    # Merge into final input vector
-    input_data.update(cats)
 
     input_df = pd.DataFrame([input_data])
 
+    training_columns = pd.read_csv("training_columns.csv", header=None)[0].tolist()
+
+    numeric_cols = [
+        "Age", "Annual Income", "Number of Dependents", "Health Score",
+        "Previous Claims", "Vehicle Age", "Credit Score", "Insurance Duration"
+    ]
+    input_df[numeric_cols] = input_df[numeric_cols].astype(float)
+
+    categorical_cols = [
+        "Gender", "Marital Status", "Education Level", "Occupation", "Location",
+        "Policy Type", "Customer Feedback", "Smoking Status", "Exercise Frequency", "Property Type"
+    ]
+
+    input_df[categorical_cols] = input_df[categorical_cols].astype(str)
+
     # Predict using MLflow model
     prediction = model.predict(input_df)[0]
+    prediction = float(prediction)
 
     st.success(f"💡 Predicted Insurance Premium: **${prediction:,.2f}**")
