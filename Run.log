@@ -1,0 +1,22 @@
+C:\Users\cvaleti\source\ML_SmartPremium_InsuranceCosts>SmartInsurance_MLFlow.py
+Downloading artifacts: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 7/7 [00:00<00:00, 1549.92it/s]
+Linear Regression: RMSE=745361.07, MAE=667.33, R2=0.00
+Downloading artifacts: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████| 7/7 [00:00<00:00, 42.57it/s]
+Decision Tree: RMSE=1537847.90, MAE=904.24, R2=-1.06
+Downloading artifacts: 100%|███████████████████████████████████████████████████| 7/7 [00:12<00:00,  1.83s/it]
+Random Forest: RMSE=732650.93, MAE=661.00, R2=0.02
+Downloading artifacts: 100%|██████████████████████████████████████████████████| 7/7 [00:00<00:00, 733.69it/s]
+XGBoost: RMSE=717033.02, MAE=645.69, R2=0.04
+Registered model 'InsurancePremiumPrediction' already exists. Creating a new version of this model...
+2025/09/02 22:31:13 WARNING mlflow.tracking._model_registry.fluent: Run with id cdcb1736fe154494857d7704fb1a67aa has no artifacts at artifact path 'model', registering model based on models:/m-125a32312e294a41804957aefd3ff080 instead
+Created version '2' of model 'InsurancePremiumPrediction'.
+✅ Best model registered: XGBoost with RMSE=717033.02 and Run ID=cdcb1736fe154494857d7704fb1a67aa
+Model version 2 promoted to PRODUCTION ✅
+
+
+
+2025/09/15 04:01:28 INFO mlflow.tracking.fluent: Experiment with name 'Insurance_Premium_Prediction_Pipeline' does not exist. Creating a new experiment.
+Linear Regression: RMSE=705.34,  RMSLE=1.1303,   R2=0.01
+Decision Tree: RMSE=996.65,  RMSLE=1.4697,   R2=-0.99
+Random Forest: RMSE=687.68,  RMSLE=1.0966,   R2=0.05
+XGBoost: RMSE=688.31,  RMSLE=1.1004,   R2=0.05
