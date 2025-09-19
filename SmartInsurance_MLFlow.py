@@ -86,11 +86,11 @@ models = {
     "Linear Regression": LinearRegression(),
     "Decision Tree": DecisionTreeRegressor(random_state=42),
     "Random Forest": RandomForestRegressor(n_estimators=100, max_depth=15, n_jobs=1, random_state=42),
-    "XGBoost": xgb.XGBRegressor(n_estimators=100,
-    learning_rate=0.05,
+    "XGBoost": xgb.XGBRegressor(n_estimators=500,
+    learning_rate=0.01,
     max_depth=8,
     subsample=0.8,
-    colsample_bytree=0.8,
+    colsample_bytree=1.0,
     random_state=42)
 }
 

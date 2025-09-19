@@ -20,3 +20,21 @@ Linear Regression: RMSE=705.34,  RMSLE=1.1303,   R2=0.01
 Decision Tree: RMSE=996.65,  RMSLE=1.4697,   R2=-0.99
 Random Forest: RMSE=687.68,  RMSLE=1.0966,   R2=0.05
 XGBoost: RMSE=688.31,  RMSLE=1.1004,   R2=0.05
+
+
+After GridSerachCV Parameters
+
+Best parameters: {'model__colsample_bytree': 1.0, 'model__learning_rate': 0.01, 'model__max_depth': 8, 'model__n_estimators': 500, 'model__subsample': 0.8}
+Best R²: 0.054060732969655446
+Validation R²: 0.053909191356662056
+
+2025/09/19 05:19:46 INFO mlflow.tracking.fluent: Experiment with name 'Insurance_Premium_Prediction_Pipeline' does not exist. Creating a new experiment.
+Linear Regression: RMSE=705.34,  RMSLE=1.1303,   R2=0.01
+Decision Tree: RMSE=996.65,  RMSLE=1.4697,   R2=-0.99
+Random Forest: RMSE=687.68,  RMSLE=1.0966,   R2=0.05
+XGBoost: RMSE=688.05,  RMSLE=1.0993,   R2=0.05
+
+
+
+
+ 
