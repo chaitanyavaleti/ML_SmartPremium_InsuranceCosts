@@ -36,5 +36,19 @@ XGBoost: RMSE=688.05,  RMSLE=1.0993,   R2=0.05
 
 
 
+Best parameters: {'model__colsample_bytree': 1.0, 'model__learning_rate': 0.01, 'model__max_depth': 8, 'model__n_estimators': 500, 'model__subsample': 0.8}
+Best R²: 0.05418576860969439
+Validation R²: 0.053909191356662056
+
+2025/09/20 05:57:48 INFO mlflow.tracking.fluent: Experiment with name 'Insurance_Premium_Prediction_Pipeline' does not exist. Creating a new experiment.
+Linear Regression: RMSE=705.05,  RMSLE=1.1300,   R2=0.01
+Decision Tree: RMSE=992.07,  RMSLE=1.4618,   R2=-0.97
+Random Forest: RMSE=684.01,  RMSLE=1.0910,   R2=0.06
+XGBoost: RMSE=684.66,  RMSLE=1.0940,   R2=0.06
+
+
+
+
+
 
  

@@ -17,6 +17,7 @@ import mlflow.sklearn
 from mlflow.models import infer_signature
 from mlflow.tracking import MlflowClient
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RepeatedKFold
 
 train = pd.read_csv("playground-series-s4e12/train.csv")
 train.drop(['id', 'Policy Start Date'], axis=1, inplace=True)
@@ -82,11 +83,13 @@ param_grid = {
 
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
+cv_strategy = RepeatedKFold(n_splits=5, n_repeats=3, random_state=42)
+
 grid_search = GridSearchCV(
     estimator=pipeline,
     param_grid=param_grid,
     scoring="r2",   # optimize for R²
-    cv=3,           # 3-fold cross-validation
+    cv=cv_strategy,
     n_jobs=-1,
     verbose=2
 )
