@@ -11,19 +11,6 @@ client = MlflowClient()
 versions = client.search_model_versions(f"name='{MODEL_NAME}'")
 prod_versions = [v for v in versions if v.tags.get("stage") == "Production"]
 
-if not prod_versions:import streamlit as st
-import pandas as pd
-import numpy as np
-from mlflow.tracking import MlflowClient
-import mlflow.pyfunc
-
-MODEL_NAME = "InsurancePremiumPrediction"
-client = MlflowClient()
-
-# Find the latest version tagged as Production
-versions = client.search_model_versions(f"name='{MODEL_NAME}'")
-prod_versions = [v for v in versions if v.tags.get("stage") == "Production"]
-
 if not prod_versions:
     raise RuntimeError("No model version tagged as Production!")
 
