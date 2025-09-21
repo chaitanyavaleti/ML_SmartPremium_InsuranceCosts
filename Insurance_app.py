@@ -11,7 +11,59 @@ client = MlflowClient()
 versions = client.search_model_versions(f"name='{MODEL_NAME}'")
 prod_versions = [v for v in versions if v.tags.get("stage") == "Production"]
 
+if not prod_versions:import streamlit as st
+import pandas as pd
+import numpy as np
+from mlflow.tracking import MlflowClient
+import mlflow.pyfunc
+
+MODEL_NAME = "InsurancePremiumPrediction"
+client = MlflowClient()
+
+# Find the latest version tagged as Production
+versions = client.search_model_versions(f"name='{MODEL_NAME}'")
+prod_versions = [v for v in versions if v.tags.get("stage") == "Production"]
+
 if not prod_versions:
+    raise RuntimeError("No model version tagged as Production!")
+
+# Pick latest Production version
+latest_prod_version = max(prod_versions, key=lambda v: int(v.version))
+
+model = mlflow.pyfunc.load_model(
+    f"models:/{MODEL_NAME}/{latest_prod_version.version}"
+)
+
+st.set_page_config(page_title="Insurance Premium Predictor", layout="wide")
+
+st.title("💰 Insurance Premium Prediction App")
+
+st.header("📂 Bulk Prediction from CSV")
+
+uploaded_file = st.file_uploader("Upload a CSV file with customer data", type=["csv"])
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.subheader("Preview of Uploaded Data")
+    st.write(df.head())
+
+    try:
+        predictions = model.predict(df)
+        df["Predicted Premium"] = predictions
+        st.subheader("✅ Predictions")
+        st.write(df.head())
+
+        # Download button
+        csv_download = df.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            "Download Predictions",
+            data=csv_download,
+            file_name="predicted_premiums.csv",
+            mime="text/csv"
+        )
+    except Exception as e:
+        st.error(f"Error while predicting: {e}")
+
     raise RuntimeError("No model version tagged as Production!")
 
 # Pick latest Production version
