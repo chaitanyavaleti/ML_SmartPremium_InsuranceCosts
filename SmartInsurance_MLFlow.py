@@ -12,8 +12,6 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-import mlflow
-import mlflow.sklearn
 from mlflow.models import infer_signature
 from mlflow.tracking import MlflowClient
 
